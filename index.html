@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tip Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        select {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tip Calculator</h1>
+    <form>
+        <label>Bill Amount:</label>
+        <input type="number" id="bill-amount" step="0.01" min="0.01">
+        <span id="bill-error" class="error"></span>
+        <label>Tip Percentage:</label>
+        <select id="tip-percentage">
+            <option value="0.10">10%</option>
+            <option value="0.15">15%</option>
+            <option value="0.20">20%</option>
+            <option value="custom">Custom</option>
+        </select>
+        <input type="number" id="custom-tip" style="display: none;" step="0.01" min="0">
+        <span id="custom-tip-error" class="error"></span>
+        <label>Round Tip:</label>
+        <select id="round-tip">
+            <option value="none">None</option>
+            <option value="dollar">To nearest dollar</option>
+            <option value="cent">To nearest cent</option>
+        </select>
+        <label>Number of People:</label>
+        <input type="number" id="num-people" min="1">
+        <span id="people-error" class="error"></span>
+        <button id="calculate">Calculate</button>
+        <button id="clear" type="reset">Clear</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('calculate').addEventListener('click', function(event) {
+            event.preventDefault();
+            calculateTip();
+        });
+
+        document.getElementById('clear').addEventListener('click', function(event) {
+            event.preventDefault();
+            clearForm();
+        });
+
+        document.getElementById('tip-percentage').addEventListener('change', function() {
+            if (this.value === 'custom') {
+                document.getElementById('custom-tip').style.display = 'block';
+            } else {
+                document.getElementById('custom-tip').style.display = 'none';
+            }
+        });
+
+        function calculateTip() {
+            const billAmount = parseFloat(document.getElementById('bill-amount').value);
+            const numPeople = parseInt(document.getElementById('num-people').value);
+            let tipPercentage;
+
+            if (isNaN(billAmount) || billAmount <= 0) {
+                document.getElementById('bill-error').innerText = 'Please enter a valid bill amount.';
+                return;
+            } else {
+                document.getElementById('bill-error').innerText = '';
+            }
+
+            if (isNaN(numPeople) || numPeople <= 0) {
+                document.getElementById('people-error').innerText = 'Please enter a valid number of people.';
+                return;
+            } else {
+                document.getElementById('people-error').innerText = '';
+            }
+
+            if (document.getElementById('tip-percentage').value === 'custom') {
+                tipPercentage = parseFloat(document.getElementById('custom-tip').value)/100
+if (isNaN(tipPercentage) || tipPercentage < 0) {
+                    document.getElementById('custom-tip-error').innerText = 'Please enter a valid custom tip percentage.';
+                    return;
+                } else {
+                    document.getElementById('custom-tip-error').innerText = '';
+                }
+            } else {
+                tipPercentage = parseFloat(document.getElementById('tip-percentage').value);
+            }
+
+            const roundTip = document.getElementById('round-tip').value;
+            const tip = billAmount * tipPercentage;
+            let totalAmount;
+
+            if (roundTip === 'dollar') {
+                totalAmount = billAmount + Math.round(tip);
+            } else if (roundTip === 'cent') {
+                totalAmount = billAmount + Math.round(tip * 100) / 100;
+            } else {
+                totalAmount = billAmount + tip;
+            }
+
+            const amountPerPerson = totalAmount / numPeople;
+            document.getElementById('result').innerText = `Total Amount: $${totalAmount.toFixed(2)} | Amount per person: $${amountPerPerson.toFixed(2)}`;
+        }
+
+        function clearForm() {
+            document.getElementById('bill-amount').value = '';
+            document.getElementById('custom-tip').value = '';
+            document.getElementById('num-people').value = '';
+            document.getElementById('tip-percentage').value = '0.10';
+            document.getElementById('round-tip').value = 'none';
+            document.getElementById('result').innerText = '';
+            document.getElementById('bill-error').innerText = '';
+            document.getElementById('people-error').innerText = '';
+            document.getElementById('custom-tip-error').innerText = '';
+        }
+    </script>
+</body>
+  </html>
+  
