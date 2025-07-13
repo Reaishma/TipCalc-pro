@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>TipCalc Pro - Smart Tip Calculator</title>
+    <meta name="description" content="Smart tip calculator with multi-currency support, PowerPoint-style animations, and Progressive Web App features. Calculate tips instantly with beautiful animations.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="manifest" href="data:application/json,{%22name%22:%22TipCalc%20Pro%22,%22short_name%22:%22TipCalc%22,%22description%22:%22Smart%20tip%20calculator%20with%20multi-currency%20support%22,%22start_url%22:%22/%22,%22display%22:%22standalone%22,%22background_color%22:%22%23/172a%22,%22theme_color%22:%22%236366f1%22,%22orientation%22:%22portrait-primary%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20width='192'%20height='192'%20viewBox='0%200%20192%20192'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3E%3Crect%20width='192'%20height='192'%20rx='24'%20fill='%236366F1'/%3E%3Cpath%20d='M96%2048C108.15%2048%20118.15%2058%20118.15%2070.5H144C144%2071.5%20144%2072.5%20144%2074C144%2075.5%20144%2076.5%20144%2078.5V144C144%20145.5%20143%20147.5%20140%20147.5H52C49%20147.5%2048%20145.5%2048%20144V52C48%2049%2049%2048%2052%2048H96Z'%20fill='%23FFFFFF'/%3E%3Ccircle%20cx='96'%20cy='96'%20r='32'%20fill='%236366F1'/%3E%3Ctext%20x='96'%20y='106'%20text-anchor='middle'%20font-family='Arial,%20sans-serif'%20font-size='24'%20font-weight='bold'%20fill='%23FFFFFF'%3E%25%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22maskable%20any%22}],%22categories%22:[%22finance%22,%22productivity%22,%22utilities%22]}">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%236366F1'/><circle cx='16' cy='16' r='8' fill='%23FFFFFF'/><text x='16' y='20' text-anchor='middle' font-family='Arial' font-size='12' font-weight='bold' fill='%236366F1'>%</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 1rem;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-dot:nth-child(1) {
+            background-color: #10b981;
+        }
+
+        .status-dot:nth-child(2) {
+            background-color: #6366f1;
+            animation-delay: 0.2s;
+        }
+
+        .status-dot:nth-child(3) {
+            background-color: #a855f7;
+            animation-delay: 0.4s;
+        }
+
+        .calculator-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.1);
+            animation: bounceIn 0.8s ease-out;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+
+        .label {
+            display: flex;
+            align-items: center;
+            color: #cbd5e1;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .label-icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .input, .select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: #475569;
+            border: 1px solid #64748b;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input:focus, .select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .input::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .input-with-icon .input {
+            padding-left: 3rem;
+        }
+
+        .input-with-suffix {
+            position: relative;
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .input-with-suffix .input {
+            padding-right: 3rem;
+        }
+
+        .tip-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ffffff;
+            background: #475569;
+            border: 1px solid #64748b;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border: none;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .people-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .people-counter {
+            flex: 1;
+            text-align: center;
+        }
+
+        .people-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .people-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .btn-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            border-radius: 0.5rem;
+        }
+
+        .btn-icon:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .results-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .result-card {
+            background: rgba(71, 85, 105, 0.3);
+            border: 1px solid #64748b;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            border-color: #6366f1;
+        }
+
+        .result-card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-label {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .result-card.primary {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .result-card.primary .result-value {
+            color: #ffffff;
+            font-size: 2rem;
+        }
+
+        .breakdown {
+            margin-top: 1rem;
+        }
+
+        .breakdown-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+        }
+
+        .breakdown-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breakdown-item-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .breakdown-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+        }
+
+        .breakdown-dot.blue {
+            background-color: #3b82f6;
+        }
+
+        .breakdown-dot.green {
+            background-color: #10b981;
+        }
+
+        .breakdown-percentage {
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        .breakdown-bar {
+            width: 100%;
+            height: 0.5rem;
+            background: #475569;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            margin-top: 0.75rem;
+        }
+
+        .breakdown-bar-fill {
+            height: 100%;
+            display: flex;
+            transition: all 0.5s ease;
+        }
+
+        .breakdown-bar-segment {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .breakdown-bar-segment.blue {
+            background-color: #3b82f6;
+        }
+
+        .breakdown-bar-segment.green {
+            background-color: #10b981;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #dc2626 0%, #ec4899 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #94a3b8;
+            animation: fadeUp 0.8s ease-out 0.5s both;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .footer-icon:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .footer-icon:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .footer-icon:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .install-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border: none;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: bounceIn 0.8s ease-out;
+        }
+
+        .install-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tip-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .container {
+                padding: 1rem 0.5rem;
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>TipCalc Pro</h1>
+            <p>Smart tip calculator with multi-currency support</p>
+            <div class="status-dots">
+                <div class="status-dot"></div>
+                <div class="status-dot"></div>
+                <div class="status-dot"></div>
+            </div>
+        </header>
+
+        <div class="calculator-card">
+            <div class="calculator-grid">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label class="label">
+                            <svg class="label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                            </svg>
+                            Currency
+                        </label>
+                        <select id="currency" class="select">
+                            <option value="USD">🇺🇸 USD - US Dollar</option>
+                            <option value="EUR">🇪🇺 EUR - Euro</option>
+                            <option value="GBP">🇬🇧 GBP - British Pound</option>
+                            <option value="CAD">🇨🇦 CAD - Canadian Dollar</option>
+                            <option value="AUD">🇦🇺 AUD - Australian Dollar</option>
+                            <option value="JPY">🇯🇵 JPY - Japanese Yen</option>
+                            <option value="CHF">🇨🇭 CHF - Swiss Franc</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">
+                            <svg class="label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Bill Amount
+                        </label>
+                        <div class="input-with-icon">
+                            <span id="currency-symbol" class="input-icon">$</span>
+                            <input type="number" id="bill-amount" class="input" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">
+                            <svg class="label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                            Tip Percentage
+                        </label>
+                        <div class="tip-buttons">
+                            <button class="btn" onclick="setTipPercentage(15)">15%</button>
+                            <button class="btn" onclick="setTipPercentage(18)">18%</button>
+                            <button class="btn" onclick="setTipPercentage(20)">20%</button>
+                            <button class="btn" onclick="setTipPercentage(25)">25%</button>
+                        </div>
+                        <div class="input-with-suffix">
+                            <input type="number" id="tip-percentage" class="input" placeholder="Custom percentage" step="0.1" min="0" max="100">
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">
+                            <svg class="label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            Number of People
+                        </label>
+                        <div class="people-control">
+                            <button class="btn btn-icon" onclick="changePeopleCount(-1)">-</button>
+                            <div class="people-counter">
+                                <div id="people-count" class="people-number">1</div>
+                                <div class="people-label">People</div>
+                            </div>
+                            <button class="btn btn-icon" onclick="changePeopleCount(1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-section">
+                    <div class="results-title">
+                        <svg class="label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        Calculation Results
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-card-content">
+                            <span class="result-label">Tip Amount</span>
+                            <span id="tip-amount" class="result-value">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-card-content">
+                            <span class="result-label">Total Amount</span>
+                            <span id="total-amount" class="result-value">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="result-card primary">
+                        <div class="result-card-content">
+                            <span class="result-label">Amount Per Person</span>
+                            <span id="amount-per-person" class="result-value">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown">
+                        <div class="breakdown-title">Breakdown</div>
+                        <div class="breakdown-items">
+                            <div class="breakdown-item">
+                                <div class="breakdown-item-label">
+                                    <div class="breakdown-dot blue"></div>
+                                    <span>Bill</span>
+                                </div>
+                                <span id="bill-percentage" class="breakdown-percentage">100%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-item-label">
+                                    <div class="breakdown-dot green"></div>
+                                    <span>Tip</span>
+                                </div>
+                                <span id="tip-percentage-display" class="breakdown-percentage">0%</span>
+                            </div>
+                        </div>
+                        <div class="breakdown-bar">
+                            <div class="breakdown-bar-fill">
+                                <div id="bill-bar" class="breakdown-bar-segment blue" style="width: 100%"></div>
+                                <div id="tip-bar" class="breakdown-bar-segment green" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="reset-btn" onclick="resetCalculator()">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Reset Calculator
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 TipCalc Pro - Progressive Web App</p>
+            <div class="footer-icons">
+                <span class="footer-icon">📱</span>
+                <span class="footer-icon">📶</span>
+                <span class="footer-icon">💾</span>
+            </div>
+        </footer>
+    </div>
+
+    <button id="install-btn" class="install-btn hidden">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+    </button>
+
+    <script>
+        // Currency configurations
+        const currencies = {
+            USD: { symbol: '$', name: 'US Dollar' },
+            EUR: { symbol: '€', name: 'Euro' },
+            GBP: { symbol: '£', name: 'British Pound' },
+            CAD: { symbol: 'C$', name: 'Canadian Dollar' },
+            AUD: { symbol: 'A$', name: 'Australian Dollar' },
+            JPY: { symbol: '¥', name: 'Japanese Yen' },
+            CHF: { symbol: 'Fr', name: 'Swiss Franc' }
+        };
+
+        // Global state
+        let currentCurrency = 'USD';
+        let billAmount = 0;
+        let tipPercentage = 0;
+        let peopleCount = 1;
+        let deferredPrompt = null;
+
+        // DOM elements
+        const currencySelect = document.getElementById('currency');
+        const currencySymbol = document.getElementById('currency-symbol');
+        const billAmountInput = document.getElementById('bill-amount');
+        const tipPercentageInput = document.getElementById('tip-percentage');
+        const peopleCountDisplay = document.getElementById('people-count');
+        const tipAmountDisplay = document.getElementById('tip-amount');
+        const totalAmountDisplay = document.getElementById('total-amount');
+        const amountPerPersonDisplay = document.getElementById('amount-per-person');
+        const billPercentageDisplay = document.getElementById('bill-percentage');
+        const tipPercentageDisplayElement = document.getElementById('tip-percentage-display');
+        const billBar = document.getElementById('bill-bar');
+        const tipBar = document.getElementById('tip-bar');
+        const installBtn = document.getElementById('install-btn');
+
+        // Initialize event listeners
+        function init() {
+            currencySelect.addEventListener('change', handleCurrencyChange);
+            billAmountInput.addEventListener('input', handleBillAmountChange);
+            tipPercentageInput.addEventListener('input', handleTipPercentageChange);
+            
+            // PWA install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installBtn.classList.remove('hidden');
+            });
+
+            installBtn.addEventListener('click', handleInstallClick);
+
+            // Service worker registration
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register(createServiceWorker());
+            }
+        }
+
+        // Currency change handler
+        function handleCurrencyChange() {
+            currentCurrency = currencySelect.value;
+            const currency = currencies[currentCurrency];
+            currencySymbol.textContent = currency.symbol;
+            updateResults();
+        }
+
+        // Bill amount change handler
+        function handleBillAmountChange() {
+            billAmount = parseFloat(billAmountInput.value) || 0;
+            updateResults();
+        }
+
+        // Tip percentage change handler
+        function handleTipPercentageChange() {
+            tipPercentage = parseFloat(tipPercentageInput.value) || 0;
+            updateTipButtons();
+            updateResults();
+        }
+
+        // Set tip percentage from buttons
+        function setTipPercentage(percentage) {
+            tipPercentage = percentage;
+            tipPercentageInput.value = percentage;
+            updateTipButtons();
+            updateResults();
+        }
+
+        // Update tip button states
+        function updateTipButtons() {
+            const buttons = document.querySelectorAll('.tip-buttons .btn');
+            buttons.forEach(button => {
+                const buttonPercentage = parseInt(button.textContent);
+                if (buttonPercentage === tipPercentage) {
+                    button.classList.add('btn-primary');
+                } else {
+                    button.classList.remove('btn-primary');
+                }
+            });
+        }
+
+        // Change people count
+        function changePeopleCount(delta) {
+            const newCount = peopleCount + delta;
+            if (newCount >= 1 && newCount <= 50) {
+                peopleCount = newCount;
+                peopleCountDisplay.textContent = peopleCount;
+                updateResults();
+            }
+        }
+
+        // Format currency amount
+        function formatCurrency(amount) {
+            const currency = currencies[currentCurrency];
+            if (currentCurrency === 'JPY') {
+                return `${currency.symbol}${Math.round(amount).toLocaleString()}`;
+            }
+            return `${currency.symbol}${amount.toFixed(2)}`;
+        }
+
+        // Update calculation results
+        function updateResults() {
+            if (billAmount <= 0) {
+                tipAmountDisplay.textContent = formatCurrency(0);
+                totalAmountDisplay.textContent = formatCurrency(0);
+                amountPerPersonDisplay.textContent = formatCurrency(0);
+                billPercentageDisplay.textContent = '100%';
+                tipPercentageDisplayElement.textContent = '0%';
+                billBar.style.width = '100%';
+                tipBar.style.width = '0%';
+                return;
+            }
+
+            const tipAmount = billAmount * (tipPercentage / 100);
+            const totalAmount = billAmount + tipAmount;
+            const amountPerPerson = totalAmount / peopleCount;
+
+            // Update displays with animation
+            animateValue(tipAmountDisplay, tipAmount);
+            animateValue(totalAmountDisplay, totalAmount);
+            animateValue(amountPerPersonDisplay, amountPerPerson);
+
+            // Update breakdown
+            const billPercentageValue = Math.round((billAmount / totalAmount) * 100);
+            const tipPercentageValue = Math.round((tipAmount / totalAmount) * 100);
+
+            billPercentageDisplay.textContent = `${billPercentageValue}%`;
+            tipPercentageDisplayElement.textContent = `${tipPercentageValue}%`;
+
+            // Update progress bars
+            billBar.style.width = `${billPercentageValue}%`;
+            tipBar.style.width = `${tipPercentageValue}%`;
+        }
+
+        // Animate value changes
+        function animateValue(element, value) {
+            element.style.transform = 'scale(1.1)';
+            element.style.color = '#10b981';
+            setTimeout(() => {
+                element.textContent = formatCurrency(value);
+                element.style.transform = 'scale(1)';
+                element.style.color = '';
+            }, 150);
+        }
+
+        // Reset calculator
+        function resetCalculator() {
+            billAmount = 0;
+            tipPercentage = 0;
+            peopleCount = 1;
+            
+            billAmountInput.value = '';
+            tipPercentageInput.value = '';
+            peopleCountDisplay.textContent = '1';
+            
+            updateTipButtons();
+            updateResults();
+        }
+
+        // PWA install handler
+        async function handleInstallClick() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                installBtn.classList.add('hidden');
+            }
+        }
+
+        // Create service worker
+        function createServiceWorker() {
+            const swCode = `
+                const CACHE_NAME = 'tipcalc-pro-v1';
+                const urlsToCache = [
+                    '/',
+                    '/index.html'
+                ];
+
+                self.addEventListener('install', (event) => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then((cache) => cache.addAll(urlsToCache))
+                    );
+                });
+
+                self.addEventListener('fetch', (event) => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then((response) => {
+                                return response || fetch(event.request);
+                            })
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            return URL.createObjectURL(blob);
+        }
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
