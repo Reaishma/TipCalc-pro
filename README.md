@@ -159,7 +159,7 @@ tipcalc-pro/
 
 ## 🚀 Live Demo 
 
-🔗 [view demo](.  )
+🔗 [view demo](https://reaishma.github.io/TipCalc-pro/)
 
 
 ## 🚀 Quick Start
