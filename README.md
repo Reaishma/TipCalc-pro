@@ -1,12 +1,12 @@
 # TipCalc Pro - Smart Tip Calculator
 
-## Overview
+## ✅Overview
 
 TipCalc Pro is a modern, responsive tip calculator web application built with React and TypeScript. It features a clean, animated interface with multi-currency support and Progressive Web App (PWA) capabilities. The application uses a full-stack architecture with an Express.js backend and a React frontend, styled with Tailwind CSS and shadcn/ui components.
 
 
 
-## Recent Changes
+## 📍Recent Changes
 
 ### January 12, 2025 - Project Completion
 - Fixed text visibility issues (black text on dark background)
@@ -15,7 +15,7 @@ TipCalc Pro is a modern, responsive tip calculator web application built with Re
 - Created comprehensive README documentation
 - All features working: multi-currency, animations, PWA installation, mobile responsive
 
-## System Architecture
+## 🛠️System Architecture
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
@@ -59,7 +59,7 @@ tipcalc-pro/
 └── standalone-tip-calculator.html  # Single file version
 ```
 
-## Key Components
+## ✅Key Components
 
 ### Core Functionality
 - **Real-time Tip Calculation** - Instant calculations as you type
@@ -130,7 +130,7 @@ tipcalc-pro/
 - **Symbol Placement** - Correct symbol positioning per currency
 
 
-## Data Flow
+## 🖥️Data Flow
 
 1. **User Input**: User enters bill amount, tip percentage, and people count
 2. **Validation**: Client-side validation using Zod schemas
@@ -159,7 +159,7 @@ tipcalc-pro/
 
 ## 🚀 Live Demo 
 
- [view demo](.  )
+🔗 [view demo](.  )
 
 
 ## 🚀 Quick Start
@@ -201,7 +201,7 @@ PORT=5000
 DATABASE_URL=your_database_url
 ```
 
-## Deployment Strategy
+## 🖥️Deployment Strategy
 
 ### Development Environment
 - **Server**: Development server with hot reload using tsx
@@ -313,5 +313,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 *TipCalc Pro - Making tip calculations simple, beautiful, and accessible for everyone.*
 
 
-The application follows modern web development best practices with TypeScript throughout, responsive design, and progressive enhancement. The architecture supports both development and production environments with appropriate tooling and build processes.
+*The application follows modern web development best practices with TypeScript throughout, responsive design, and progressive enhancement. The architecture supports both development and production environments with appropriate tooling and build processes.*
 
