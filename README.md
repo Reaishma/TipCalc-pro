@@ -8,7 +8,7 @@ TipCalc Pro is a modern, responsive tip calculator web application built with Re
 
 ## Recent Changes
 
-### January 13, 2025 - Project Completion
+### January 12, 2025 - Project Completion
 - Fixed text visibility issues (black text on dark background)
 - Created proper PWA icons and manifest files
 - Generated complete standalone HTML file with embedded CSS/JS
@@ -37,14 +37,17 @@ TipCalc Pro is a modern, responsive tip calculator web application built with Re
 - **Development Storage**: In-memory storage for development
 - **Migration**: Drizzle Kit for schema migrations
 
+
 ## Key Components
 
-### Core Features
-1. **Tip Calculation**: Calculate tips with custom percentages and split among multiple people
-2. **Multi-Currency Support**: Support for different currencies with symbols and formatting
-3. **Calculation History**: Store and retrieve recent calculations
-4. **Progressive Web App**: Offline support with service worker and manifest
-5. **Responsive Design**: Mobile-first design with responsive layouts
+### Core Functionality
+- **Real-time Tip Calculation** - Instant calculations as you type
+- **Multi-Currency Support** - 7 major currencies (USD, EUR, GBP, CAD, AUD, JPY, CHF)
+- **Split Bill Feature** - Calculate amount per person (1-50 people)
+- **Quick Tip Selection** - Preset buttons for 15%, 18%, 20%, 25%
+- **Custom Tip Percentage** - Enter any custom percentage
+- **Visual Breakdown** - Animated progress bars showing bill vs tip ratio
+
 
 ### UI Components
 - **shadcn/ui**: Comprehensive component library for consistent design
