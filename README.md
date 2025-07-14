@@ -1,31 +1,112 @@
+# TipCalc Pro - Smart Tip Calculator
+
+## Overview
+
+TipCalc Pro is a modern, responsive tip calculator web application built with React and TypeScript. It features a clean, animated interface with multi-currency support and Progressive Web App (PWA) capabilities. The application uses a full-stack architecture with an Express.js backend and a React frontend, styled with Tailwind CSS and shadcn/ui components.
 
 
-Tip Calculator
 
-Overview
-A simple tip calculator application that helps users calculate tips based on the total bill amount and desired tip percentage 💸
+## Recent Changes
 
-Features
-- 💸 *Calculate tips*: Easily calculate tips based on the total bill amount and desired tip percentage.
-- 📊 *Split bills*: Calculate the total amount per person when splitting the bill.
+### January 13, 2025 - Project Completion
+- Fixed text visibility issues (black text on dark background)
+- Created proper PWA icons and manifest files
+- Generated complete standalone HTML file with embedded CSS/JS
+- Created comprehensive README documentation
+- All features working: multi-currency, animations, PWA installation, mobile responsive
 
-Technologies Used
-- 💻 *HTML5*: Structuring and presenting content.
-- 🎨 *CSS3*: Styling and layout.
-- ⚡️ *JavaScript*: Calculations and interactive elements.
+## System Architecture
 
-Getting Started
-- 🌐 *Try it out*: Check out the live application at `https://Reaishma.github.io/Tip-calculator-`
-- 📁 *Explore locally*:
-    1. Download the repository: Click the green "Code" button, then select "Download ZIP".
-    2. Open `index.html` in a web browser.
+### Frontend Architecture
+- **Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with shadcn/ui component library
+- **State Management**: React hooks with TanStack Query for server state
+- **Routing**: Wouter for client-side routing
+- **Animations**: Framer Motion for PowerPoint-style animations
+- **Build Tool**: Vite for fast development and optimized builds
 
-Contributing
-Contributions welcome! 🌟 Fork the repository and submit a pull request.
+### Backend Architecture
+- **Runtime**: Node.js with Express.js
+- **Language**: TypeScript with ESM modules
+- **API Style**: REST API with JSON responses
+- **Development**: Hot reload with tsx for development server
 
-Author
-- *Reaishma N*
+### Database & Storage
+- **ORM**: Drizzle ORM with PostgreSQL dialect
+- **Database**: PostgreSQL (via Neon serverless)
+- **Development Storage**: In-memory storage for development
+- **Migration**: Drizzle Kit for schema migrations
 
-License
-MIT License 📄
+## Key Components
+
+### Core Features
+1. **Tip Calculation**: Calculate tips with custom percentages and split among multiple people
+2. **Multi-Currency Support**: Support for different currencies with symbols and formatting
+3. **Calculation History**: Store and retrieve recent calculations
+4. **Progressive Web App**: Offline support with service worker and manifest
+5. **Responsive Design**: Mobile-first design with responsive layouts
+
+### UI Components
+- **shadcn/ui**: Comprehensive component library for consistent design
+- **Animations**: Smooth transitions and PowerPoint-style slide-in effects
+- **Form Handling**: React Hook Form with Zod validation
+- **Toast Notifications**: User feedback for actions and errors
+
+### API Endpoints
+- `POST /api/calculate` - Calculate tip and store calculation
+- `GET /api/calculations` - Retrieve recent calculations history
+
+## Data Flow
+
+1. **User Input**: User enters bill amount, tip percentage, and people count
+2. **Validation**: Client-side validation using Zod schemas
+3. **API Call**: TanStack Query manages server requests
+4. **Calculation**: Server calculates tip amounts and stores in database
+5. **Response**: Results displayed with animations
+6. **History**: Previous calculations available for reference
+
+## External Dependencies
+
+### Frontend Dependencies
+- **React Ecosystem**: React, React DOM, React Router (Wouter)
+- **Styling**: Tailwind CSS, class-variance-authority, clsx
+- **UI Components**: Radix UI primitives, shadcn/ui components
+- **Animation**: Framer Motion
+- **Forms**: React Hook Form, Hookform resolvers
+- **HTTP Client**: TanStack Query with fetch API
+- **Utilities**: date-fns, lucide-react icons
+
+### Backend Dependencies
+- **Server**: Express.js with middleware
+- **Database**: Drizzle ORM, @neondatabase/serverless
+- **Validation**: Zod for schema validation
+- **Session**: connect-pg-simple for session storage
+- **Development**: tsx for TypeScript execution
+
+### Development Tools
+- **Build**: Vite with React plugin
+- **TypeScript**: Full TypeScript support with strict mode
+- **Linting**: ESLint configuration
+- **Database**: Drizzle Kit for migrations
+
+## Deployment Strategy
+
+### Development Environment
+- **Server**: Development server with hot reload using tsx
+- **Client**: Vite dev server with HMR
+- **Database**: In-memory storage for development
+
+### Production Build
+- **Frontend**: Vite builds optimized static assets
+- **Backend**: esbuild bundles server code for Node.js
+- **Database**: PostgreSQL with Drizzle migrations
+- **Deployment**: Single server deployment with static file serving
+
+### PWA Features
+- **Service Worker**: Caches resources for offline functionality
+- **Web App Manifest**: Enables installation on mobile devices
+- **Icons**: Multiple icon sizes for different platforms
+- **Offline Support**: Basic offline functionality with cached resources
+
+The application follows modern web development best practices with TypeScript throughout, responsive design, and progressive enhancement. The architecture supports both development and production environments with appropriate tooling and build processes.
 
