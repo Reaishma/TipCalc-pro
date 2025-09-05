@@ -9,7 +9,7 @@
 
 TipCalc Pro is a modern, responsive tip calculator web application built with React and TypeScript. It features a clean, animated interface with multi-currency support and Progressive Web App (PWA) capabilities. The application uses a full-stack architecture with an Express.js backend and a React frontend, styled with Tailwind CSS and shadcn/ui components.
 
-
+![tip calc pro](https://github.com/Reaishma/TipCalc-pro/blob/main/Screenshot_20250904-201347_1.jpg)
 
 ## 📍Recent Changes
 
