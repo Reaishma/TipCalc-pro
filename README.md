@@ -3,7 +3,7 @@
 
 # 🚀 Live Demo 
 
-🔗 view demo https://reaishma.github.io/TipCalc-pro/
+**🔗 view demo** https://reaishma.github.io/TipCalc-pro/
 
 ## ✅Overview
 
