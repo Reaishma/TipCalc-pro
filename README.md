@@ -83,6 +83,9 @@ tipcalc-pro/
 
 
 ### Progressive Web App (PWA)
+
+![Tip calc pro](https://github.com/Reaishma/TipCalc-pro/blob/main/Screenshot_20250904-201502_1.jpg)
+
 - **Offline Support** - Works without internet connection
 - **Install on Mobile** - Add to home screen like a native app
 - **Fast Loading** - Cached resources for instant startup
