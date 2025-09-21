@@ -6,7 +6,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "client/index.html",
+      "src": "client/dist/index.html",
       "use": "@vercel/static-build"
     }
   ],
@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "client/index.html"
+      "dest": "client/dist/index.html"
     }
   ],
   "installCommand": "npm install --prefix client && npm install --prefix server",
