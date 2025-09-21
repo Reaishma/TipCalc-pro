@@ -2,20 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "client/index.ts",
+      "src": "dist/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "dist/index.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "client/index.ts"
+      "dest": "/dist/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/dist/index.html"
     }
-  ],
-  "installCommand": "npm install --prefix client && npm install",
-  "buildCommand": "npm run build"
+  ]
 }
+
