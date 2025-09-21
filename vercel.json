@@ -4,10 +4,6 @@
     {
       "src": "client/index.ts",
       "use": "@vercel/node"
-    },
-    {
-      "src": "index.html",
-      "use": "@vercel/static-file"
     }
   ],
   "routes": [
@@ -17,9 +13,9 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "index.html"
     }
   ],
   "installCommand": "npm install --prefix client && npm install",
-  "buildCommand": "npm run build --prefix client"
+  "buildCommand": "npm run build"
 }
