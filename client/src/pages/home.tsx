@@ -538,4 +538,7 @@ export default function Home() {
                   >
                     <Button
                       onClick={handleReset}
-                      className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pin
+                      className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 transition-all duration-300">
+<RotateCcw className="mr-2 h-5 w-5"/>
+Reset
+</Button>
