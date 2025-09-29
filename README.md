@@ -1,9 +1,10 @@
 # TipCalc Pro - Smart Tip Calculator
 
 
-# 🚀 Live Demo 
+# 🚀 Access the project 
 
-**🔗 view demo** https://reaishma.github.io/TipCalc-pro/
+**Try the Live App on**https://tip-calc-pro-ten.vercel.app/
+**Web Interface on** https://reaishma.github.io/TipCalc-pro/
 
 ## ✅Overview
 
