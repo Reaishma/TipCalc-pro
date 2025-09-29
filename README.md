@@ -3,7 +3,8 @@
 
 # 🚀 Access the project 
 
-**Try the Live App on**https://tip-calc-pro-ten.vercel.app/
+**Try the Live App on** https://tip-calc-pro-ten.vercel.app/
+
 **Web Interface on** https://reaishma.github.io/TipCalc-pro/
 
 ## ✅Overview
